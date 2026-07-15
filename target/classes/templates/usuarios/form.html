@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}">Formulario de Usuario</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;
+        }
+        input:focus { outline: none; border-color: #007bff; }
+        .btn { display: inline-block; padding: 10px 20px; margin: 5px; text-decoration: none; border-radius: 4px; font-size: 14px; border: none; cursor: pointer; }
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .error-message { color: #dc3545; font-size: 12px; margin-top: 5px; }
+        .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; }
+        .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .checkbox-group { display: flex; align-items: center; }
+        .checkbox-group input { width: auto; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${titulo}">Formulario de Usuario</h1>
+
+        <div th:if="${error}" class="alert alert-danger">
+            <span th:text="${error}"></span>
+        </div>
+
+        <form th:action="@{${usuario.id != null} ? '/usuarios/' + ${usuario.id} : '/usuarios'}"
+              th:object="${usuario}" method="post">
+
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingrese el nombre">
+                <div th:if="${#fields.hasErrors('nombre')}" class="error-message">
+                    <span th:errors="*{nombre}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" th:field="*{email}" placeholder="Ingrese el email">
+                <div th:if="${#fields.hasErrors('email')}" class="error-message">
+                    <span th:errors="*{email}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" th:field="*{password}" placeholder="Ingrese la contraseña">
+                <div th:if="${#fields.hasErrors('password')}" class="error-message">
+                    <span th:errors="*{password}"></span>
+                </div>
+            </div>
+
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="activo" th:field="*{activo}">
+                <label for="activo" style="margin: 0;">Usuario Activo</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/usuarios" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
