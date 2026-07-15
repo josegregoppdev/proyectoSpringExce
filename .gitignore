@@ -3,4 +3,4 @@ target/
 *.sql
 .DS_Store
 Thumbs.db
-
+*.properties
